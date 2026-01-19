@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { hash } from 'phc-argon2'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const createUserSchema = z.object({
   email: z.string().email(),
   password: z.string().min(8).optional(),
@@ -60,7 +62,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json({ users })
   } catch (error) {
-    // Error('Error fetching users:', error)
+    // console.error('Error fetching users:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
@@ -166,7 +168,7 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // Error('Error creating user:', error)
+    // console.error('Error creating user:', error)
     return NextResponse.json(
       { error: 'Internal server error' },
       { status: 500 }
