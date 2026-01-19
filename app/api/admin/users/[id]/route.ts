@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { hash } from 'phc-argon2'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const updateUserSchema = z.object({
   email: z.string().email().optional(),
   password: z.string().min(8).optional(),
