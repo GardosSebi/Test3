@@ -1,11 +1,10 @@
 import { NextAuthOptions } from 'next-auth'
-import { PrismaAdapter } from '@next-auth/prisma-adapter'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import { prisma } from './prisma'
 import { verify } from 'phc-argon2'
 
 export const authOptions: NextAuthOptions = {
-  adapter: PrismaAdapter(prisma),
+  // No adapter needed since we're using JWT strategy
   providers: [
     CredentialsProvider({
       name: 'Credentials',
