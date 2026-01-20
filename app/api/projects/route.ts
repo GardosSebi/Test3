@@ -4,6 +4,8 @@ import { authOptions } from '@/lib/auth'
 import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const projectSchema = z.object({
   name: z.string().trim().min(1).max(60),
   color: z.string().regex(/^#[0-9A-Fa-f]{6}$/).optional().nullable(),
