@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import UpcomingClient from './UpcomingClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function UpcomingPage() {
   const session = await getServerSession(authOptions)
 

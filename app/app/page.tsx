@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import InboxClient from './InboxClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function InboxPage() {
   const session = await getServerSession(authOptions)
 

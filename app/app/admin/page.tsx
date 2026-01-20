@@ -5,6 +5,8 @@ import { prisma } from '@/lib/prisma'
 import { isAdmin } from '@/lib/admin'
 import AdminClient from './AdminClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function AdminPage() {
   const session = await getServerSession(authOptions)
 
@@ -37,6 +39,14 @@ export default async function AdminPage() {
     },
   })
 
-  return <AdminClient initialUsers={users} />
+  return (
+    <AdminClient
+      initialUsers={users.map((user) => ({
+        ...user,
+        created_at: user.created_at.toISOString(),
+        updated_at: user.updated_at.toISOString(),
+      }))}
+    />
+  )
 }
 

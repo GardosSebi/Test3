@@ -4,6 +4,8 @@ import { redirect } from 'next/navigation'
 import { prisma } from '@/lib/prisma'
 import TodayClient from './TodayClient'
 
+export const dynamic = 'force-dynamic'
+
 export default async function TodayPage() {
   const session = await getServerSession(authOptions)
 
