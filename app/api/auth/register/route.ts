@@ -3,6 +3,8 @@ import { prisma } from '@/lib/prisma'
 import { hash } from 'phc-argon2'
 import { z } from 'zod'
 
+export const dynamic = 'force-dynamic'
+
 const registerSchema = z.object({
   email: z.string().email(),
   name: z.string().trim().min(1).max(100),
