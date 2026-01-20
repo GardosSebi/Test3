@@ -11,6 +11,12 @@ const nextConfig = {
     // !! WARN !!
     ignoreBuildErrors: true,
   },
+  experimental: {
+    // Ensure API routes are not statically analyzed
+    serverActions: {
+      bodySizeLimit: '2mb',
+    },
+  },
 }
 
 module.exports = nextConfig

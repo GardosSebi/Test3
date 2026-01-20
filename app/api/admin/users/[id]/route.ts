@@ -7,6 +7,8 @@ import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
 export const runtime = 'nodejs'
+export const revalidate = 0
+export const fetchCache = 'force-no-store'
 
 const updateUserSchema = z.object({
   email: z.string().email().optional(),
@@ -18,6 +20,11 @@ export async function PATCH(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  // Prevent execution during build
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({ error: 'Not available during build' }, { status: 503 })
+  }
+
   try {
     const session = await getServerSession(authOptions)
     
@@ -98,6 +105,11 @@ export async function DELETE(
   request: NextRequest,
   { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
+  // Prevent execution during build
+  if (process.env.NEXT_PHASE === 'phase-production-build') {
+    return NextResponse.json({ error: 'Not available during build' }, { status: 503 })
+  }
+
   try {
     const session = await getServerSession(authOptions)
     
