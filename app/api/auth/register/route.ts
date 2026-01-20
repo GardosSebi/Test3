@@ -4,6 +4,7 @@ import { hash } from 'phc-argon2'
 import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 const registerSchema = z.object({
   email: z.string().email(),

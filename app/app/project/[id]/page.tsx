@@ -6,6 +6,7 @@ import ProjectClient from './ProjectClient'
 import { notFound } from 'next/navigation'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export default async function ProjectPage({
   params,

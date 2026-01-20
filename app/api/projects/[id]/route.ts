@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 const updateProjectSchema = z.object({
   name: z.string().trim().min(1).max(60).optional(),

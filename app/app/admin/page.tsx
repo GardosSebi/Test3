@@ -6,6 +6,7 @@ import { isAdmin } from '@/lib/admin'
 import AdminClient from './AdminClient'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export default async function AdminPage() {
   const session = await getServerSession(authOptions)

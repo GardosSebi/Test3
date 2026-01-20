@@ -5,6 +5,7 @@ import { prisma } from '@/lib/prisma'
 import TodayClient from './TodayClient'
 
 export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
 
 export default async function TodayPage() {
   const session = await getServerSession(authOptions)

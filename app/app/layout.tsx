@@ -3,6 +3,9 @@ import { authOptions } from '@/lib/auth'
 import { redirect } from 'next/navigation'
 import Sidebar from '@/components/Sidebar'
 
+export const dynamic = 'force-dynamic'
+export const runtime = 'nodejs'
+
 export default async function AppLayout({
   children,
 }: {
