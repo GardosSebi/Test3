@@ -197,9 +197,9 @@ export default function TaskDetailsModal({
 
       <div className="fixed inset-0 flex items-center justify-center p-4">
         <Dialog.Panel className="mx-auto max-w-lg w-full bg-white dark:bg-gray-800 rounded-lg shadow-xl">
-          <div className="p-6">
+          <div className="p-4 sm:p-6">
             <div className="flex items-center justify-between mb-4">
-              <Dialog.Title className="text-lg font-semibold text-gray-900 dark:text-white">
+              <Dialog.Title className="text-base sm:text-lg font-semibold text-gray-900 dark:text-white">
                 Detalii Sarcină
               </Dialog.Title>
               <button
@@ -377,24 +377,24 @@ export default function TaskDetailsModal({
               </div>
             </div>
 
-            <div className="flex items-center justify-between mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
+            <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
               <button
                 onClick={handleDelete}
-                className="px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300"
+                className="w-full sm:w-auto px-4 py-2 text-sm font-medium text-red-600 dark:text-red-400 hover:text-red-700 dark:hover:text-red-300 text-center"
               >
                 Șterge
               </button>
               <div className="flex gap-2">
                 <button
                   onClick={onClose}
-                  className="px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium text-gray-700 dark:text-gray-300 hover:text-gray-900 dark:hover:text-white"
                 >
                   Anulează
                 </button>
                 <button
                   onClick={handleSave}
                   disabled={isSaving || !title.trim()}
-                  className="px-4 py-2 text-sm font-medium text-white bg-blue-600 dark:bg-blue-500 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="flex-1 sm:flex-none px-4 py-2 text-sm font-medium text-white bg-blue-600 dark:bg-blue-500 rounded-lg hover:bg-blue-700 dark:hover:bg-blue-600 disabled:opacity-50 disabled:cursor-not-allowed"
                 >
                   {isSaving ? 'Se salvează...' : 'Salvează'}
                 </button>

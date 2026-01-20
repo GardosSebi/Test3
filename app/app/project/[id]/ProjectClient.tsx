@@ -96,9 +96,9 @@ export default function ProjectClient({ initialTasks, projectId, projectName }: 
   }
 
   return (
-    <div className="max-w-7xl mx-auto p-6">
+    <div className="max-w-7xl mx-auto p-4 sm:p-6">
       <div className="mb-6">
-        <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">{projectName}</h1>
+        <h1 className="text-xl sm:text-2xl font-bold text-gray-900 dark:text-white mb-2">{projectName}</h1>
         <p className="text-sm text-gray-600 dark:text-gray-300">
           {tasks.length} {tasks.length === 1 ? 'sarcină' : 'sarcini'}
         </p>

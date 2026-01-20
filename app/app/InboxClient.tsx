@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState } from 'react'
 import { Check, X, Users, Mail } from 'lucide-react'
 import { useRouter } from 'next/navigation'
 
@@ -20,11 +20,10 @@ interface Invitation {
 }
 
 interface InboxClientProps {
-  initialTasks: any[]
   initialInvitations: Invitation[]
 }
 
-export default function InboxClient({ initialTasks, initialInvitations }: InboxClientProps) {
+export default function InboxClient({ initialInvitations }: InboxClientProps) {
   const [invitations, setInvitations] = useState<Invitation[]>(initialInvitations)
   const [processing, setProcessing] = useState<string | null>(null)
   const router = useRouter()
@@ -100,7 +99,7 @@ export default function InboxClient({ initialTasks, initialInvitations }: InboxC
   }
 
   return (
-    <div className="max-w-4xl mx-auto p-6">
+    <div className="max-w-4xl mx-auto p-4 sm:p-6">
       {invitations.length > 0 && (
         <div className="mb-6">
           <h2 className="text-lg font-semibold text-gray-900 dark:text-gray-100 mb-4 flex items-center gap-2">
@@ -111,9 +110,9 @@ export default function InboxClient({ initialTasks, initialInvitations }: InboxC
             {invitations.map((invitation) => (
               <div
                 key={invitation.id}
-                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex items-center justify-between shadow-sm"
+                className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg p-4 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 shadow-sm"
               >
-                <div className="flex-1">
+                <div className="flex-1 min-w-0">
                   <div className="flex items-center gap-3 mb-1">
                     <Users className="w-5 h-5 text-blue-600 dark:text-blue-400" />
                     <div>
@@ -127,11 +126,11 @@ export default function InboxClient({ initialTasks, initialInvitations }: InboxC
                     </div>
                   </div>
                 </div>
-                <div className="flex items-center gap-2">
+                <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-2">
                   <button
                     onClick={() => handleAcceptInvitation(invitation.id)}
                     disabled={processing === invitation.id}
-                    className="px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-green-600 text-white rounded-lg hover:bg-green-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
                   >
                     <Check className="w-4 h-4" />
                     Acceptă
@@ -139,7 +138,7 @@ export default function InboxClient({ initialTasks, initialInvitations }: InboxC
                   <button
                     onClick={() => handleDenyInvitation(invitation.id)}
                     disabled={processing === invitation.id}
-                    className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center gap-2 transition-colors"
+                    className="flex-1 sm:flex-none px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center gap-2 transition-colors"
                   >
                     <X className="w-4 h-4" />
                     Respinge
@@ -150,7 +149,6 @@ export default function InboxClient({ initialTasks, initialInvitations }: InboxC
           </div>
         </div>
       )}
-
     </div>
   )
 }

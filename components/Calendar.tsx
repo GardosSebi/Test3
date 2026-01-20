@@ -104,9 +104,9 @@ export default function Calendar({ tasks, onDateClick, onTaskClick }: CalendarPr
   }
 
   return (
-    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-6">
+    <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm border border-gray-200 dark:border-gray-700 p-3 sm:p-6">
       {/* Calendar Header */}
-      <div className="flex items-center justify-between mb-6">
+      <div className="flex items-center justify-between mb-4 sm:mb-6">
         <button
           onClick={goToPreviousMonth}
           className="p-2 hover:bg-gray-100 dark:hover:bg-gray-700 rounded-lg transition-colors"
@@ -114,7 +114,7 @@ export default function Calendar({ tasks, onDateClick, onTaskClick }: CalendarPr
         >
           <ChevronLeft className="w-5 h-5 text-gray-600 dark:text-gray-300" />
         </button>
-        <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
+        <h2 className="text-base sm:text-xl font-semibold text-gray-900 dark:text-white text-center">
           {monthNames[month]} {year}
         </h2>
         <button
@@ -160,7 +160,7 @@ export default function Calendar({ tasks, onDateClick, onTaskClick }: CalendarPr
                 }
               }}
               className={`
-                aspect-square p-2 rounded-lg border transition-all
+                aspect-square p-1 sm:p-2 rounded-lg border transition-all
                 ${isTodayDate
                   ? 'bg-blue-50 dark:bg-blue-900/30 border-blue-200 dark:border-blue-700 font-semibold'
                   : isPastDate
@@ -173,14 +173,14 @@ export default function Calendar({ tasks, onDateClick, onTaskClick }: CalendarPr
               <div className="flex flex-col h-full">
                 <span
                   className={`
-                    text-sm mb-1
+                    text-xs sm:text-sm mb-1
                     ${isTodayDate ? 'text-blue-700 dark:text-blue-300' : isPastDate ? 'text-gray-400 dark:text-gray-500' : 'text-gray-900 dark:text-white'}
                   `}
                 >
                   {day}
                 </span>
                 <div className="flex-1 flex flex-col gap-0.5 overflow-hidden">
-                  {dayTasks.slice(0, 3).map((task) => (
+                  {dayTasks.slice(0, 2).map((task) => (
                     <div
                       key={task.id}
                       onClick={(e) => {

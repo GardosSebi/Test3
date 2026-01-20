@@ -16,8 +16,9 @@ import {
   SunIcon,
   MoonIcon,
   X,
+  Menu,
 } from 'lucide-react'
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import TeamManagement from './TeamManagement'
 import WorkspaceMembers from './WorkspaceMembers'
 
@@ -48,6 +49,17 @@ export default function Sidebar() {
   const [newProjectName, setNewProjectName] = useState('')
   const [theme, setTheme] = useState('dark')
   const [workspaceName, setWorkspaceName] = useState('Todo App')
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [isDesktop, setIsDesktop] = useState(false)
+
+  useEffect(() => {
+    const checkDesktop = () => {
+      setIsDesktop(window.innerWidth >= 1024)
+    }
+    checkDesktop()
+    window.addEventListener('resize', checkDesktop)
+    return () => window.removeEventListener('resize', checkDesktop)
+  }, [])
 
   useEffect(() => {
     fetchProjects()
@@ -155,11 +167,51 @@ export default function Sidebar() {
   }
 
   return (
-    <aside className="w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col">
-      <div className="p-4 border-b border-gray-200 dark:border-gray-800">
+    <>
+      {/* Mobile menu button */}
+      <button
+        onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+        className="lg:hidden fixed top-4 left-4 z-50 p-2 bg-white dark:bg-gray-800 rounded-lg shadow-lg border border-gray-200 dark:border-gray-700"
+        aria-label="Toggle menu"
+      >
+        <Menu className="w-6 h-6 text-gray-700 dark:text-gray-300" />
+      </button>
+
+      {/* Mobile overlay */}
+      <AnimatePresence>
+        {mobileMenuOpen && (
+          <>
+            <motion.div
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              onClick={() => setMobileMenuOpen(false)}
+              className="lg:hidden fixed inset-0 bg-black bg-opacity-50 z-30"
+            />
+          </>
+        )}
+      </AnimatePresence>
+
+      {/* Sidebar */}
+      <motion.aside
+        initial={false}
+        animate={{
+          x: isDesktop ? 0 : mobileMenuOpen ? 0 : '-100%',
+        }}
+        transition={{ type: 'tween', duration: 0.2 }}
+        className="fixed lg:static inset-y-0 left-0 w-64 bg-white dark:bg-gray-900 border-r border-gray-200 dark:border-gray-800 flex flex-col z-40 lg:z-auto shadow-lg lg:shadow-none"
+      >
+      <div className="p-4 border-b border-gray-200 dark:border-gray-800 flex items-center justify-between">
         <h1 className="text-xl font-bold text-gray-900 dark:text-gray-100 truncate" title={workspaceName}>
           {workspaceName}
         </h1>
+        <button
+          onClick={() => setMobileMenuOpen(false)}
+          className="lg:hidden p-1 text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+          aria-label="Close menu"
+        >
+          <X className="w-5 h-5" />
+        </button>
       </div>
 
       <nav className="flex-1 overflow-y-auto p-4 space-y-1">
@@ -170,6 +222,7 @@ export default function Sidebar() {
             <Link
               key={item.href}
               href={item.href}
+              onClick={() => setMobileMenuOpen(false)}
               className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
                 active
                   ? 'bg-blue-50 text-blue-700 dark:bg-blue-900/50 dark:text-blue-300'
@@ -185,6 +238,7 @@ export default function Sidebar() {
         {session?.user?.role === 'ADMIN' && (
           <Link
             href="/app/admin"
+            onClick={() => setMobileMenuOpen(false)}
             className={`flex items-center gap-3 px-3 py-2 rounded-lg transition-colors ${
               pathname === '/app/admin'
                 ? 'bg-purple-50 text-purple-700 dark:bg-purple-900/50 dark:text-purple-300'
@@ -251,6 +305,7 @@ export default function Sidebar() {
                   <div className="flex items-center gap-3">
                     <Link
                       href={`/app/project/${project.id}`}
+                      onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center gap-3 flex-1 min-w-0"
                     >
                       <FolderIcon
@@ -322,7 +377,8 @@ export default function Sidebar() {
           </button>
         </div>
       </div>
-    </aside>
+      </motion.aside>
+    </>
   )
 }
 

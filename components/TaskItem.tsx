@@ -40,7 +40,7 @@ export default function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         exit={{ opacity: 0, x: -20 }}
-        className={`group flex items-center gap-3 p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
+        className={`group flex items-center gap-2 sm:gap-3 p-2 sm:p-3 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition-colors ${
           task.status === 'COMPLETED' ? 'opacity-60' : ''
         }`}
       >
@@ -86,7 +86,7 @@ export default function TaskItem({ task, onUpdate, onDelete }: TaskItemProps) {
               {task.notes}
             </p>
           )}
-          <div className="flex items-center gap-3 mt-1">
+          <div className="flex items-center gap-2 sm:gap-3 mt-1 flex-wrap">
             {task.project && (
               <span
                 className={`text-xs px-2 py-0.5 rounded ${

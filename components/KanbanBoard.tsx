@@ -118,14 +118,14 @@ export default function KanbanBoard({
             onDrop={() => handleDrop(status)}
           >
             {/* Column Header */}
-            <div className={`p-4 border-b ${config.borderColor} rounded-t-lg`}>
-              <h3 className={`font-semibold ${config.textColor}`}>
+            <div className={`p-3 sm:p-4 border-b ${config.borderColor} rounded-t-lg`}>
+              <h3 className={`text-sm sm:text-base font-semibold ${config.textColor}`}>
                 {config.label} ({columnTasks.length})
               </h3>
             </div>
 
             {/* Tasks */}
-            <div className="flex-1 p-2 space-y-2 overflow-y-auto min-h-[200px]">
+            <div className="flex-1 p-2 space-y-2 overflow-y-auto min-h-[150px] sm:min-h-[200px]">
               <AnimatePresence>
                 {columnTasks.map((task) => {
                   const dueDate = task.due_at ? new Date(task.due_at) : null
@@ -142,7 +142,7 @@ export default function KanbanBoard({
                       onDragStart={() => handleDragStart(task)}
                       onClick={() => onTaskClick?.(task)}
                       className={`
-                        bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-3
+                        bg-white dark:bg-gray-700 rounded-lg shadow-sm border border-gray-200 dark:border-gray-600 p-2 sm:p-3
                         cursor-pointer hover:shadow-md dark:hover:shadow-lg transition-shadow
                         ${overdue ? 'border-red-300 dark:border-red-600 bg-red-50 dark:bg-red-900/30' : ''}
                       `}
@@ -164,7 +164,7 @@ export default function KanbanBoard({
                               {task.notes}
                             </p>
                           )}
-                          <div className="flex items-center gap-3 text-xs text-gray-500 dark:text-gray-400">
+                          <div className="flex items-center gap-2 sm:gap-3 text-xs text-gray-500 dark:text-gray-400 flex-wrap">
                             {dueDate && (
                               <div className={`flex items-center gap-1 ${overdue ? 'text-red-600 dark:text-red-400 font-medium' : ''}`}>
                                 <Calendar className="w-3 h-3" />

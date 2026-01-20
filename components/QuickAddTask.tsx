@@ -46,7 +46,7 @@ export default function QuickAddTask({
           : 'border-gray-300 dark:border-gray-600 bg-white dark:bg-gray-800 hover:border-gray-400 dark:hover:border-gray-500'
       }`}
     >
-      <div className="flex items-center gap-2 p-3">
+      <div className="flex items-center gap-2 p-2 sm:p-3">
         <Plus className="w-5 h-5 text-gray-400 dark:text-gray-500" />
         <input
           type="text"
@@ -62,7 +62,7 @@ export default function QuickAddTask({
             setShowDescription(true)
           }}
           placeholder={placeholder}
-          className="flex-1 bg-transparent border-none outline-none text-sm text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
+          className="flex-1 bg-transparent border-none outline-none text-sm sm:text-base text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500"
         />
         <button
           type="submit"
@@ -73,7 +73,7 @@ export default function QuickAddTask({
         </button>
       </div>
       {shouldShowFields && (
-        <div className="px-3 pb-3 space-y-2">
+        <div className="px-2 sm:px-3 pb-2 sm:pb-3 space-y-2">
           <div className="flex items-center gap-2">
             <label className="text-xs font-medium text-gray-700 dark:text-gray-300 whitespace-nowrap">Prioritate: <span className="text-red-500 dark:text-red-400">*</span></label>
             <select
