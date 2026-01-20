@@ -13,7 +13,7 @@ const addMemberSchema = z.object({
 // Get project members
 export async function GET(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -21,10 +21,12 @@ export async function GET(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await Promise.resolve(params)
+
     // Verify user has access to project
     const project = await prisma.project.findFirst({
       where: {
-        id: params.id,
+        id,
         OR: [
           { userId: session.user.id },
           { members: { some: { userId: session.user.id } } },
@@ -41,7 +43,7 @@ export async function GET(
 
     const members = await prisma.projectMember.findMany({
       where: {
-        projectId: params.id,
+        projectId: id,
       },
       include: {
         user: {
@@ -66,7 +68,7 @@ export async function GET(
 // Add member to project
 export async function POST(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -74,10 +76,12 @@ export async function POST(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { id } = await Promise.resolve(params)
+
     // Verify user owns the project
     const project = await prisma.project.findFirst({
       where: {
-        id: params.id,
+        id,
         userId: session.user.id,
       },
     })
@@ -118,7 +122,7 @@ export async function POST(
     const existing = await prisma.projectMember.findUnique({
       where: {
         projectId_userId: {
-          projectId: params.id,
+          projectId: id,
           userId: data.userId,
         },
       },
@@ -133,7 +137,7 @@ export async function POST(
 
     const member = await prisma.projectMember.create({
       data: {
-        projectId: params.id,
+        projectId: id,
         userId: data.userId,
       },
       include: {

@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 // Remove member from workspace
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { memberId: string } }
+  { params }: { params: Promise<{ memberId: string }> | { memberId: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -16,9 +16,11 @@ export async function DELETE(
       return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
     }
 
+    const { memberId } = await Promise.resolve(params)
+
     // Get member
     const member = await prisma.workspaceMember.findUnique({
-      where: { id: params.memberId },
+      where: { id: memberId },
       include: {
         workspace: true,
       },
@@ -40,7 +42,7 @@ export async function DELETE(
     }
 
     await prisma.workspaceMember.delete({
-      where: { id: params.memberId },
+      where: { id: memberId },
     })
 
     return NextResponse.json({ success: true })

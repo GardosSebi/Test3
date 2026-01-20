@@ -15,7 +15,7 @@ const updateUserSchema = z.object({
 
 export async function PATCH(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -34,6 +34,7 @@ export async function PATCH(
       return NextResponse.json({ error: 'Forbidden: Admin access required' }, { status: 403 })
     }
 
+    const { id } = await Promise.resolve(params)
     const body = await request.json()
     const data = updateUserSchema.parse(body)
 
@@ -45,7 +46,7 @@ export async function PATCH(
         where: { email: data.email },
       })
       
-      if (existingUser && existingUser.id !== params.id) {
+      if (existingUser && existingUser.id !== id) {
         return NextResponse.json(
           { error: 'Email already in use' },
           { status: 400 }
@@ -64,7 +65,7 @@ export async function PATCH(
     }
 
     const updatedUser = await prisma.user.update({
-      where: { id: params.id },
+      where: { id },
       data: updateData,
       select: {
         id: true,
@@ -94,7 +95,7 @@ export async function PATCH(
 
 export async function DELETE(
   request: NextRequest,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> | { id: string } }
 ) {
   try {
     const session = await getServerSession(authOptions)
@@ -113,8 +114,10 @@ export async function DELETE(
       return NextResponse.json({ error: 'Forbidden: Admin access required' }, { status: 403 })
     }
 
+    const { id } = await Promise.resolve(params)
+
     // Prevent deleting yourself
-    if (params.id === session.user.id) {
+    if (id === session.user.id) {
       return NextResponse.json(
         { error: 'Cannot delete your own account' },
         { status: 400 }
@@ -122,7 +125,7 @@ export async function DELETE(
     }
 
     await prisma.user.delete({
-      where: { id: params.id },
+      where: { id },
     })
 
     return NextResponse.json({ success: true })
